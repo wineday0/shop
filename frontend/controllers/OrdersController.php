@@ -6,14 +6,13 @@ use common\models\shop\Orders;
 use common\models\shop\search\OrdersSearch;
 use common\models\shop\search\ProductsSearch;
 use Yii;
-use yii\base\Controller;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
 /**
  * Class OrdersController
  */
-class OrdersController extends Controller
+class OrdersController extends BaseController
 {
     /**
      * {@inheritdoc}

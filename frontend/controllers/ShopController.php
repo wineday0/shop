@@ -11,7 +11,6 @@ use frontend\models\cart\AddToCartForm;
 use frontend\models\cart\RemoveFromCartForm;
 use frontend\models\checkout\PaymentForm;
 use Yii;
-use yii\base\Controller;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\web\Response;
@@ -19,11 +18,8 @@ use yii\web\Response;
 /**
  * Shop Controller
  */
-class ShopController extends Controller
+class ShopController extends BaseController
 {
-    public const CODE_SUCCESS = 'success';
-    public const CODE_ERROR = 'error';
-
     public const CURRENCY_GENERAL = 'USD';
     public const CURRENCY_SYMBOL_GENERAL = '$';
 
@@ -176,21 +172,5 @@ class ShopController extends Controller
         }
         Yii::$app->session->setFlash('payment-success', 'Payment success!');
         return true;
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getSuccessResponse(): array
-    {
-        return ['code' => static::CODE_SUCCESS];
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getErrorResponse(): array
-    {
-        return ['code' => static::CODE_ERROR];
     }
 }

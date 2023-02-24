@@ -6,14 +6,20 @@ use frontend\models\review\ChangeReviewForm;
 use frontend\models\review\CreateReviewForm;
 use frontend\models\review\RemoveReviewForm;
 use Yii;
-use yii\web\Controller;
 use yii\web\Response;
 
-class ReviewsController extends Controller
+/**
+ * Class ReviewsController
+ */
+class ReviewsController extends BaseController
 {
     public const CODE_SUCCESS = 'success';
     public const CODE_ERROR = 'error';
 
+    /**
+     * @return string[]
+     * @throws \Throwable
+     */
     public function actionCreate()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -30,6 +36,9 @@ class ReviewsController extends Controller
         return static::getSuccessResponse();
     }
 
+    /**
+     * @return string[]
+     */
     public function actionRemove()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -45,6 +54,9 @@ class ReviewsController extends Controller
         return static::getSuccessResponse();
     }
 
+    /**
+     * @return string[]
+     */
     public function actionChange()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -58,21 +70,5 @@ class ReviewsController extends Controller
             Yii::$app->session->setFlash('success', 'Review has been changed');
         }
         return static::getSuccessResponse();
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getSuccessResponse(): array
-    {
-        return ['code' => static::CODE_SUCCESS];
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getErrorResponse(): array
-    {
-        return ['code' => static::CODE_ERROR];
     }
 }

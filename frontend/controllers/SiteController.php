@@ -16,17 +16,13 @@ use yii\base\InvalidArgumentException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
-use yii\web\Controller;
 use yii\web\Response;
 
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends BaseController
 {
-    public const CODE_SUCCESS = 'success';
-    public const CODE_ERROR = 'error';
-
     /**
      * {@inheritdoc}
      */
@@ -239,6 +235,9 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * @return string[]
+     */
     public function actionChangePassword()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -255,6 +254,10 @@ class SiteController extends Controller
         return static::getSuccessResponse();
     }
 
+    /**
+     * @return string
+     * @throws \Throwable
+     */
     public function actionAccount()
     {
         $user = Yii::$app->user->getIdentity();
@@ -264,6 +267,9 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * @return string[]
+     */
     public function actionEditUser()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -277,21 +283,5 @@ class SiteController extends Controller
             Yii::$app->session->setFlash('success', 'Your changes saved!');
         }
         return static::getSuccessResponse();
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getSuccessResponse(): array
-    {
-        return ['code' => static::CODE_SUCCESS];
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getErrorResponse(): array
-    {
-        return ['code' => static::CODE_ERROR];
     }
 }
