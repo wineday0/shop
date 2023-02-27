@@ -26,6 +26,7 @@ class AppAsset extends AssetBundle
     ];
 
     public $js = [
+        'js/general.js',
         'js/cart.js',
         'js/review.js',
         'js/account.js',
