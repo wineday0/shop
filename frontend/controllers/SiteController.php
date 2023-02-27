@@ -11,6 +11,7 @@ use frontend\models\SignupForm;
 use frontend\models\user\ChangePasswordForm;
 use frontend\models\user\EditUserForm;
 use frontend\models\VerifyEmailForm;
+use Throwable;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\filters\AccessControl;
@@ -126,7 +127,7 @@ class SiteController extends BaseController
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash(
                 'success',
-                'Thank you for registration. Please check your inbox for verification email.'
+                Yii::t('app', 'signup.success')
             );
             return $this->goHome();
         }
@@ -146,14 +147,17 @@ class SiteController extends BaseController
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash(
+                    'success',
+                    Yii::t('app', 'request_password_reset.success')
+                );
 
                 return $this->goHome();
             }
 
             Yii::$app->session->setFlash(
                 'error',
-                'Sorry, we are unable to reset password for the provided email address.'
+                Yii::t('app', 'request_password_reset.error')
             );
         }
 
@@ -178,7 +182,7 @@ class SiteController extends BaseController
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password saved.');
+            Yii::$app->session->setFlash('success', Yii::t('app', 'password.reset.success'));
 
             return $this->goHome();
         }
@@ -203,11 +207,11 @@ class SiteController extends BaseController
             throw new BadRequestHttpException($e->getMessage());
         }
         if (($user = $model->verifyEmail()) && Yii::$app->user->login($user)) {
-            Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
+            Yii::$app->session->setFlash('success', Yii::t('app', 'email.verify.success'));
             return $this->goHome();
         }
 
-        Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
+        Yii::$app->session->setFlash('error', Yii::t('app', 'email.verify.error'));
         return $this->goHome();
     }
 
@@ -221,12 +225,15 @@ class SiteController extends BaseController
         $model = new ResendVerificationEmailForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash(
+                    'success',
+                    Yii::t('app', 'email.resend.verify.success')
+                );
                 return $this->goHome();
             }
             Yii::$app->session->setFlash(
                 'error',
-                'Sorry, we are unable to resend verification email for the provided email address.'
+                Yii::t('app', 'email.resend.verify.error')
             );
         }
 
@@ -249,14 +256,14 @@ class SiteController extends BaseController
             Yii::$app->session->setFlash('error', $form->getErrors('error'));
             return static::getErrorResponse();
         } else {
-            Yii::$app->session->setFlash('success', 'Your password changed!');
+            Yii::$app->session->setFlash('success', Yii::t('app', 'password.changed.success'));
         }
         return static::getSuccessResponse();
     }
 
     /**
      * @return string
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function actionAccount()
     {
@@ -280,7 +287,7 @@ class SiteController extends BaseController
             Yii::$app->session->setFlash('error', $form->getErrors('error'));
             return static::getErrorResponse();
         } else {
-            Yii::$app->session->setFlash('success', 'Your changes saved!');
+            Yii::$app->session->setFlash('success', Yii::t('app', 'user.edit.success'));
         }
         return static::getSuccessResponse();
     }

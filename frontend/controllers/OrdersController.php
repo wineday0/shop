@@ -55,7 +55,7 @@ class OrdersController extends BaseController
     {
         $orderId = Yii::$app->request->get('id');
         if (empty($orderId)) {
-            throw new NotFoundHttpException('Order not found');
+            throw new NotFoundHttpException(Yii::t('app', 'order.not_found'));
         }
         $order = Orders::findOne(['id' => $orderId]);
         $products = ProductsSearch::getProductsByOrder($orderId);

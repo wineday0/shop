@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use frontend\models\review\ChangeReviewForm;
 use frontend\models\review\CreateReviewForm;
 use frontend\models\review\RemoveReviewForm;
+use Throwable;
 use Yii;
 use yii\web\Response;
 
@@ -13,12 +14,9 @@ use yii\web\Response;
  */
 class ReviewsController extends BaseController
 {
-    public const CODE_SUCCESS = 'success';
-    public const CODE_ERROR = 'error';
-
     /**
      * @return string[]
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function actionCreate()
     {
@@ -31,7 +29,7 @@ class ReviewsController extends BaseController
             Yii::$app->session->setFlash('error', $form->getErrors('error'));
             return static::getErrorResponse();
         } else {
-            Yii::$app->session->setFlash('success', 'Thank you for a review!');
+            Yii::$app->session->setFlash('success', Yii::t('app', 'review.thx'));
         }
         return static::getSuccessResponse();
     }
@@ -49,7 +47,7 @@ class ReviewsController extends BaseController
             Yii::$app->session->setFlash('error', $form->getErrors('error'));
             return static::getErrorResponse();
         } else {
-            Yii::$app->session->setFlash('success', 'Review has been deleted');
+            Yii::$app->session->setFlash('success', Yii::t('app', 'review.has_deleted'));
         }
         return static::getSuccessResponse();
     }
@@ -67,7 +65,7 @@ class ReviewsController extends BaseController
             Yii::$app->session->setFlash('error', $form->getErrors('error'));
             return static::getErrorResponse();
         } else {
-            Yii::$app->session->setFlash('success', 'Review has been changed');
+            Yii::$app->session->setFlash('success', Yii::t('app', 'review.has_changed'));
         }
         return static::getSuccessResponse();
     }

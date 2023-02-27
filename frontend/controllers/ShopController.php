@@ -106,7 +106,7 @@ class ShopController extends BaseController
         $cartForm->load($data, '');
         if (!$cartForm->save()) {
             Yii::$app->response->statusCode = 500;
-            Yii::$app->session->setFlash('error', static::CODE_ERROR);
+            Yii::$app->session->setFlash('error', $cartForm->getFirstError('error'));
             return static::getErrorResponse();
         }
         Yii::$app->session->setFlash('success', static::CODE_SUCCESS);
@@ -167,10 +167,13 @@ class ShopController extends BaseController
         $paymentForm->setUser(Yii::$app->user->identity);
         $paymentForm->load($data);
         if (!$paymentForm->save()) {
-            Yii::$app->session->setFlash('payment-danger', 'Internal error. Try again later.');
+            Yii::$app->session->setFlash(
+                'payment-danger',
+                Yii::t('app', 'general.internal_error')
+            );
             return false;
         }
-        Yii::$app->session->setFlash('payment-success', 'Payment success!');
+        Yii::$app->session->setFlash('payment-success', Yii::t('app', 'payment.success'));
         return true;
     }
 }

@@ -4,6 +4,7 @@ namespace frontend\models\review;
 
 use common\models\shop\Reviews;
 use common\models\User;
+use Yii;
 use yii\base\Model;
 
 class ChangeReviewForm extends Model
@@ -34,13 +35,13 @@ class ChangeReviewForm extends Model
         }
         $review = Reviews::findOne(['id' => $this->reviewId]);
         if (empty($review)) {
-            $this->addError('error', 'Error, review not found');
+            $this->addError('error', Yii::t('app', 'review.change.error.not_found'));
             return false;
         }
         $review->data = $this->text;
         $review->rating = $this->rating;
         if (!$review->update()) {
-            $this->addError('error', 'Error, try again later');
+            $this->addError('error', Yii::t('app', 'review.change.error.not_updated'));
             return false;
         }
         return true;
