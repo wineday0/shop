@@ -5,6 +5,7 @@ namespace frontend\models\review;
 use common\models\shop\Products;
 use common\models\shop\Reviews;
 use common\models\User;
+use Yii;
 use yii\base\Model;
 
 class CreateReviewForm extends Model
@@ -35,7 +36,12 @@ class CreateReviewForm extends Model
         }
 
         if (!$this->validateReviewsCounter()) {
-            $this->addError('error', 'Review limit is ' . Reviews::LIMIT_FOR_USER);
+            $this->addError(
+                'error',
+                Yii::t('app', 'review.create.error.limit', [
+                    'limit' => Reviews::LIMIT_FOR_USER
+                ])
+            );
             return false;
         }
         $review = new Reviews();
@@ -45,7 +51,7 @@ class CreateReviewForm extends Model
         $review->rating = $this->rating;
         $review->is_visible = Reviews::VISIBLE_YES;
         if (!$review->save()) {
-            $this->addError('error', 'Error, try again later');
+            $this->addError('error', Yii::t('app', 'review.create.error.not_saved'));
             return false;
         }
         return true;

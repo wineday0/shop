@@ -11,6 +11,7 @@ return [
     'id' => 'app-frontend',
     'name' => 'Lorem Ipsum Shop',
     'homeUrl' => '/shop',
+    'language' => 'en',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
