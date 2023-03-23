@@ -3,7 +3,6 @@
 namespace frontend\models\cart;
 
 use common\models\shop\Cart;
-use Yii;
 use yii\base\Model;
 use yii\db\StaleObjectException;
 use yii\helpers\ArrayHelper;

@@ -181,7 +181,9 @@ class SiteController extends BaseController
             throw new BadRequestHttpException($e->getMessage());
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
+        if ($model->load(Yii::$app->request->post())
+            && $model->validate()
+            && $model->resetPassword()) {
             Yii::$app->session->setFlash('success', Yii::t('app', 'password.reset.success'));
 
             return $this->goHome();
@@ -206,7 +208,8 @@ class SiteController extends BaseController
         } catch (InvalidArgumentException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
-        if (($user = $model->verifyEmail()) && Yii::$app->user->login($user)) {
+        if (($user = $model->verifyEmail())
+            && Yii::$app->user->login($user)) {
             Yii::$app->session->setFlash('success', Yii::t('app', 'email.verify.success'));
             return $this->goHome();
         }
@@ -223,7 +226,8 @@ class SiteController extends BaseController
     public function actionResendVerificationEmail()
     {
         $model = new ResendVerificationEmailForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post())
+            && $model->validate()) {
             if ($model->sendEmail()) {
                 Yii::$app->session->setFlash(
                     'success',

@@ -28,9 +28,9 @@ class ReviewsController extends BaseController
         if (!$form->save()) {
             Yii::$app->session->setFlash('error', $form->getErrors('error'));
             return static::getErrorResponse();
-        } else {
-            Yii::$app->session->setFlash('success', Yii::t('app', 'review.thx'));
         }
+        Yii::$app->session->setFlash('success', Yii::t('app', 'review.thx'));
+
         return static::getSuccessResponse();
     }
 
@@ -46,9 +46,9 @@ class ReviewsController extends BaseController
         if (!$form->remove()) {
             Yii::$app->session->setFlash('error', $form->getErrors('error'));
             return static::getErrorResponse();
-        } else {
-            Yii::$app->session->setFlash('success', Yii::t('app', 'review.has_deleted'));
         }
+        Yii::$app->session->setFlash('success', Yii::t('app', 'review.has_deleted'));
+
         return static::getSuccessResponse();
     }
 
